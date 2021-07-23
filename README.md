@@ -1,11 +1,11 @@
-# Spryker Suite
-[![Build Status](https://github.com/spryker-shop/suite/workflows/CI/badge.svg)](https://github.com/spryker-shop/suite/actions?query=workflow%3ACI)
+# Spryker FaaS Launchpad
+[![Build Status](https://github.com/spryker/faas-launchpad/workflows/CI/badge.svg)](https://github.com/spryker/faas-launchpad/actions?query=workflow%3ACI)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 License: [MIT](LICENSE)
 
 ## Vagrant Installation
-In order to install the Shop Suite on your machine, you can follow the instructions described in the link below:
+In order to install the FaaS Launchpad on your machine, you can follow the instructions described in the link below:
 
 For DevVM based installation instructions, see [About the Installation Guides](https://documentation.spryker.com/docs/about-installation).
 
@@ -36,8 +36,8 @@ Recommended system requirements for MacOS:
 
 Run the commands:
 ```bash
-mkdir suite && cd suite
-git clone https://github.com/spryker-shop/suite.git ./
+mkdir faas_launchpad && cd faas_launchpad
+git clone git@github.com:spryker/faas-launchpad.git .
 git clone git@github.com:spryker/docker-sdk.git docker
 ```
 
@@ -47,11 +47,6 @@ git clone git@github.com:spryker/docker-sdk.git docker
 
 ```bash
 docker/sdk boot -s
-```
-
-> Please, follow the recommendations in output in order to prepare the environment.
-
-```bash
 docker/sdk up
 ```
 
@@ -59,7 +54,8 @@ docker/sdk up
 
 ```bash
 git checkout your_branch
-docker/sdk boot -s
+git submodule update --init --force docker && docker/sdk boot -s
+
 docker/sdk up --assets --data
 ```
 
@@ -72,7 +68,7 @@ docker/sdk up --assets --data
 
 ```bash
 git checkout your_branch
-docker/sdk boot -s
+git submodule update --init --force docker && docker/sdk boot -s
 
 docker/sdk up
 ```
@@ -89,11 +85,6 @@ docker/sdk clean-data && docker/sdk up && docker/sdk console q:w:s -v -s
 
 ```bash
 docker/sdk boot deploy.dev.yml
-```
-
-> Please, follow the recommendations in output in order to prepare the environment.
-
-```bash
 docker/sdk up
 ```
 
@@ -101,7 +92,8 @@ docker/sdk up
 
 ```bash
 git checkout your_branch
-docker/sdk boot -s deploy.dev.yml
+git submodule update --init --force docker && docker/sdk boot -s deploy.dev.yml
+
 docker/sdk up --build --assets --data
 ```
 
@@ -123,7 +115,7 @@ docker/sdk up --build --assets --data
     3. Restrart file sync and re-build the codebase:
     ```bash
     docker/sdk trouble
-    docker/sdk boot -s deploy.dev.yml
+    rm -rf ./docker && git submodule update --init --force docker && docker/sdk boot deploy.dev.yml
     docker/sdk up --build --assets
     ```
 
@@ -134,7 +126,8 @@ docker/sdk up --build --assets --data
     2. If the queue is empty but the issue persists, reload the demo data:
     ```bash
     docker/sdk trouble
-    docker/sdk boot -s deploy.dev.yml
+    rm -rf ./docker && git submodule update --init --force docker && docker/sdk boot deploy.dev.yml
+
     docker/sdk up --build --assets --data
     ```
 
