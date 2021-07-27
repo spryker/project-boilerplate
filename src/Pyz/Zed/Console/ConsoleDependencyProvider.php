@@ -7,29 +7,18 @@
 
 namespace Pyz\Zed\Console;
 
-use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
-use Pyz\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig;
 use SecurityChecker\Command\SecurityCheckerCommand;
-use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
-use Spryker\Zed\CategoryDataImport\CategoryDataImportConfig;
 use Spryker\Zed\CodeGenerator\Communication\Console\BundleClientCodeGeneratorConsole;
 use Spryker\Zed\CodeGenerator\Communication\Console\BundleCodeGeneratorConsole;
 use Spryker\Zed\CodeGenerator\Communication\Console\BundleServiceCodeGeneratorConsole;
 use Spryker\Zed\CodeGenerator\Communication\Console\BundleSharedCodeGeneratorConsole;
 use Spryker\Zed\CodeGenerator\Communication\Console\BundleYvesCodeGeneratorConsole;
 use Spryker\Zed\CodeGenerator\Communication\Console\BundleZedCodeGeneratorConsole;
-use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
-use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
-use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
-use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
-use Spryker\Zed\ContentNavigationDataImport\ContentNavigationDataImportConfig;
-use Spryker\Zed\Customer\Communication\Console\CustomerPasswordResetConsole;
-use Spryker\Zed\Customer\Communication\Console\CustomerPasswordSetConsole;
 use Spryker\Zed\DataExport\Communication\Console\DataExportConsole;
 use Spryker\Zed\DataImport\Communication\Console\DataImportConsole;
 use Spryker\Zed\DataImport\Communication\Console\DataImportDumpConsole;
@@ -64,35 +53,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Log\Communication\Console\DeleteLogFilesConsole;
 use Spryker\Zed\Maintenance\Communication\Console\MaintenanceDisableConsole;
 use Spryker\Zed\Maintenance\Communication\Console\MaintenanceEnableConsole;
-use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
-use Spryker\Zed\MerchantOpeningHoursDataImport\MerchantOpeningHoursDataImportConfig;
-use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 use Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin;
-use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
-use Spryker\Zed\Oauth\Communication\Console\OauthTokenConsole;
-use Spryker\Zed\Oms\Communication\Console\CheckConditionConsole as OmsCheckConditionConsole;
-use Spryker\Zed\Oms\Communication\Console\CheckTimeoutConsole as OmsCheckTimeoutConsole;
-use Spryker\Zed\Oms\Communication\Console\ClearLocksConsole as OmsClearLocksConsole;
-use Spryker\Zed\PaymentDataImport\PaymentDataImportConfig;
-use Spryker\Zed\PriceProduct\Communication\Console\PriceProductStoreOptimizeConsole;
-use Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Console\PriceProductMerchantRelationshipDeleteConsole;
-use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleApplyConsole;
-use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleCleanupConsole;
-use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
-use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
-use Spryker\Zed\ProductConfigurationDataImport\ProductConfigurationDataImportConfig;
-use Spryker\Zed\ProductDiscontinued\Communication\Console\DeactivateDiscontinuedProductsConsole;
-use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
-use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
-use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelValidityConsole;
-use Spryker\Zed\ProductLabelDataImport\ProductLabelDataImportConfig;
-use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
-use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
-use Spryker\Zed\ProductPageSearch\Communication\Console\ProductPageProductAbstractRefreshConsole;
-use Spryker\Zed\ProductRelation\Communication\Console\ProductRelationUpdaterConsole;
-use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig;
-use Spryker\Zed\ProductValidity\Communication\Console\ProductValidityConsole;
 use Spryker\Zed\Propel\Communication\Console\DatabaseDropConsole;
 use Spryker\Zed\Propel\Communication\Console\DatabaseDropTablesConsole;
 use Spryker\Zed\Propel\Communication\Console\DeleteMigrationFilesConsole;
@@ -106,8 +67,6 @@ use Spryker\Zed\Publisher\Communication\Console\PublisherTriggerEventsConsole;
 use Spryker\Zed\Queue\Communication\Console\QueueDumpConsole;
 use Spryker\Zed\Queue\Communication\Console\QueueTaskConsole;
 use Spryker\Zed\Queue\Communication\Console\QueueWorkerConsole;
-use Spryker\Zed\Quote\Communication\Console\DeleteExpiredGuestQuoteConsole;
-use Spryker\Zed\QuoteRequest\Communication\Console\CloseOutdatedQuoteRequestConsole;
 use Spryker\Zed\RabbitMq\Communication\Console\DeleteAllExchangesConsole;
 use Spryker\Zed\RabbitMq\Communication\Console\DeleteAllQueuesConsole;
 use Spryker\Zed\RabbitMq\Communication\Console\PurgeAllQueuesConsole;
@@ -121,8 +80,6 @@ use Spryker\Zed\Router\Communication\Plugin\Console\MerchantPortalRouterCacheWar
 use Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendApiConsole;
 use Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendGatewayConsole;
 use Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackofficeConsole;
-use Spryker\Zed\SalesInvoice\Communication\Console\OrderInvoiceSendConsole;
-use Spryker\Zed\SalesOms\Communication\Console\ImportOrderItemsStatusConsole;
 use Spryker\Zed\Scheduler\Communication\Console\SchedulerCleanConsole;
 use Spryker\Zed\Scheduler\Communication\Console\SchedulerResumeConsole;
 use Spryker\Zed\Scheduler\Communication\Console\SchedulerSetupConsole;
@@ -131,32 +88,11 @@ use Spryker\Zed\Search\Communication\Console\GenerateSourceMapConsole;
 use Spryker\Zed\Search\Communication\Console\RemoveSourceMapConsole;
 use Spryker\Zed\Search\Communication\Console\SearchConsole;
 use Spryker\Zed\Search\Communication\Console\SearchSetupSourcesConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchCloseIndexConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchCopyIndexConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchDeleteIndexConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchOpenIndexConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotCreateConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotDeleteConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotRegisterRepositoryConsole;
-use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotRestoreConsole;
 use Spryker\Zed\Session\Communication\Console\SessionRemoveLockConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\YvesInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedInstallDependenciesConsole;
-use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
-use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
-use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
-use Spryker\Zed\StateMachine\Communication\Console\CheckConditionConsole as StateMachineCheckConditionConsole;
-use Spryker\Zed\StateMachine\Communication\Console\CheckTimeoutConsole as StateMachineCheckTimeoutConsole;
-use Spryker\Zed\StateMachine\Communication\Console\ClearLocksConsole as StateMachineClearLocksConsole;
-use Spryker\Zed\StockDataImport\StockDataImportConfig;
 use Spryker\Zed\Storage\Communication\Console\StorageDeleteAllConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole;
@@ -178,7 +114,6 @@ use SprykerSdk\Spryk\Console\SprykDumpConsole;
 use SprykerSdk\Spryk\Console\SprykRunConsole;
 use SprykerSdk\Zed\Benchmark\Communication\Console\BenchmarkRunConsole;
 use SprykerSdk\Zed\ComposerConstrainer\Communication\Console\ComposerConstraintConsole;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
 
 /**
@@ -212,100 +147,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new GenerateSourceMapConsole(),
             new RemoveSourceMapConsole(),
             new SearchSetupSourcesConsole(),
-            new OmsCheckConditionConsole(),
-            new OmsCheckTimeoutConsole(),
-            new OmsClearLocksConsole(),
-            new StateMachineCheckTimeoutConsole(),
-            new StateMachineCheckConditionConsole(),
-            new StateMachineClearLocksConsole(),
-            new ImportOrderItemsStatusConsole(),
             new SessionRemoveLockConsole(),
             new QueueTaskConsole(),
             new QueueWorkerConsole(),
-            new ProductRelationUpdaterConsole(),
-            new ProductLabelValidityConsole(),
-            new ProductLabelRelationUpdaterConsole(),
-            new ProductValidityConsole(),
-            new ProductPageProductAbstractRefreshConsole(),
-            new ProductOfferValidityConsole(),
-            new OauthTokenConsole(),
             new DataImportConsole(),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CURRENCY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CATEGORY_TEMPLATE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_GLOSSARY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION_NODE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_TEMPLATE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_BLOCK),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_BLOCK_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_BLOCK_CATEGORY_POSITION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_BLOCK_CATEGORY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_VOUCHER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_CONCRETE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_IMAGE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_STOCK),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_ATTRIBUTE_KEY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_MANAGEMENT_ATTRIBUTE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_GROUP),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_OPTION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_OPTION_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_REVIEW),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductLabelDataImportConfig::IMPORT_TYPE_PRODUCT_LABEL),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductLabelDataImportConfig::IMPORT_TYPE_PRODUCT_LABEL_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_SET),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_SEARCH_ATTRIBUTE_MAP),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_SEARCH_ATTRIBUTE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_TAX),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_AMOUNT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_ORDER_SOURCE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_ABSTRACT_GIFT_CARD_CONFIGURATION), #GiftCardFeature
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CONCRETE_GIFT_CARD_CONFIGURATION), #GiftCardFeature
-
-            //core data importers
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PriceProductDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PriceProductScheduleDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyDataImportConfig::IMPORT_TYPE_COMPANY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyUnitAddressDataImportConfig::IMPORT_TYPE_COMPANY_UNIT_ADDRESS),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyUnitAddressLabelDataImportConfig::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyUnitAddressLabelDataImportConfig::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL_RELATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductAlternativeDataImportConfig::IMPORT_TYPE_PRODUCT_ALTERNATIVE), #ProductAlternativeFeature
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . BusinessOnBehalfDataImportConfig::IMPORT_TYPE_COMPANY_USER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductDiscontinuedDataImportConfig::IMPORT_TYPE_PRODUCT_DISCONTINUED), #ProductDiscontinuedFeature
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MultiCartDataImportConfig::IMPORT_TYPE_MULTI_CART),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SharedCartDataImportConfig::IMPORT_TYPE_SHARED_CART),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductPackagingUnitDataImportConfig::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductRelationDataImportConfig::IMPORT_TYPE_PRODUCT_RELATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductRelationDataImportConfig::IMPORT_TYPE_PRODUCT_RELATION_STORE),
-
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_ITEM),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_METHOD_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PaymentDataImportConfig::IMPORT_TYPE_PAYMENT_METHOD),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PaymentDataImportConfig::IMPORT_TYPE_PAYMENT_METHOD_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . StockDataImportConfig::IMPORT_TYPE_STOCK),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . StockDataImportConfig::IMPORT_TYPE_STOCK_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ContentNavigationDataImportConfig::IMPORT_TYPE_CONTENT_NAVIGATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductConfigurationDataImportConfig::IMPORT_TYPE_PRODUCT_CONFIGURATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantOpeningHoursDataImportConfig::IMPORT_TYPE_MERCHANT_OPENING_HOURS_DATE_SCHEDULE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantOpeningHoursDataImportConfig::IMPORT_TYPE_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER),
 
             // Publish and Synchronization
             new EventBehaviorTriggerTimeoutConsole(),
@@ -324,29 +169,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new StorageRedisExportRdbConsole(),
             new StorageRedisImportRdbConsole(),
             new StorageDeleteAllConsole(),
-            new ElasticsearchCloseIndexConsole(),
-            new ElasticsearchCopyIndexConsole(),
-            new ElasticsearchDeleteIndexConsole(),
-            new ElasticsearchOpenIndexConsole(),
-            new ElasticsearchSnapshotRegisterRepositoryConsole(),
-            new ElasticsearchSnapshotDeleteConsole(),
-            new ElasticsearchSnapshotCreateConsole(),
-            new ElasticsearchSnapshotRestoreConsole(),
 
-            new InstallPackageManagerConsole(),
-            new CleanUpDependenciesConsole(),
             new InstallProjectDependenciesConsole(),
-
-            new YvesInstallDependenciesConsole(),
-            new YvesBuildFrontendConsole(),
-
-            new ZedInstallDependenciesConsole(),
             new ZedBuildFrontendConsole(),
-
-            new MerchantPortalInstallDependenciesConsole(),
-            new MerchantPortalBuildFrontendConsole(),
-
-            new DateTimeProductConfiguratorBuildFrontendConsole(),
+            new ZedInstallDependenciesConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
@@ -357,20 +183,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new MaintenanceEnableConsole(),
             new MaintenanceDisableConsole(),
 
-            new DeactivateDiscontinuedProductsConsole(), #ProductDiscontinuedFeature
-
-            new PriceProductStoreOptimizeConsole(),
-            new PriceProductMerchantRelationshipDeleteConsole(),
-
-            new DeleteExpiredGuestQuoteConsole(),
             new UuidGeneratorConsole(),
 
             new CleanTranslationCacheConsole(),
             new GenerateTranslationCacheConsole(),
-            new CloseOutdatedQuoteRequestConsole(),
-
-            new PriceProductScheduleApplyConsole(),
-            new PriceProductScheduleCleanupConsole(),
 
             new SchedulerSetupConsole(),
             new SchedulerCleanConsole(),
@@ -383,14 +199,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new ResolvableClassCacheConsole(),
 
-            new TriggerEventFromCsvFileConsole(),
-
             new DataExportConsole(),
-
-            new CustomerPasswordResetConsole(),
-            new CustomerPasswordSetConsole(),
-
-            new OrderInvoiceSendConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -437,8 +246,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new GenerateRestApiDocumentationConsole();
             $commands[] = new QueueDumpConsole();
             $commands[] = new EventTriggerListenerConsole();
-            $commands[] = new CustomerPasswordResetConsole();
-            $commands[] = new CustomerPasswordSetConsole();
             $commands[] = new RouterDebugBackofficeConsole();
             $commands[] = new RouterDebugBackendGatewayConsole();
             $commands[] = new RouterDebugBackendApiConsole();

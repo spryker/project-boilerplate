@@ -2,7 +2,7 @@
 
 $stores = [];
 
-$stores['DE'] = [
+$stores['GLOBAL'] = [
     // different contexts
     'contexts' => [
         // shared settings for all contexts

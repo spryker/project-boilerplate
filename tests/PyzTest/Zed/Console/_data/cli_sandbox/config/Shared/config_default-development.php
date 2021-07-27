@@ -2,7 +2,6 @@
 
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
@@ -50,13 +49,6 @@ $config[TwigConstants::YVES_TWIG_OPTIONS] = [
 ];
 
 $config[ZedNavigationConstants::ZED_NAVIGATION_CACHE_ENABLED] = true;
-
-$config[AclConstants::ACL_USER_RULE_WHITELIST][] = [
-    'bundle' => 'wdt',
-    'controller' => '*',
-    'action' => '*',
-    'type' => 'allow',
-];
 
 $config[PropelConstants::PROPEL_DEBUG] = true;
 $config[PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION] = true;

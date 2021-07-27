@@ -11,7 +11,6 @@ use Spryker\Zed\Session\SessionDependencyProvider as SprykerSessionDependencyPro
 use Spryker\Zed\SessionFile\Communication\Plugin\Session\SessionHandlerFileProviderPlugin;
 use Spryker\Zed\SessionRedis\Communication\Plugin\Session\SessionHandlerRedisLockingProviderPlugin;
 use Spryker\Zed\SessionRedis\Communication\Plugin\Session\SessionHandlerRedisProviderPlugin;
-use Spryker\Zed\SessionRedis\Communication\Plugin\Session\YvesSessionRedisLockReleaserPlugin;
 use Spryker\Zed\SessionRedis\Communication\Plugin\Session\ZedSessionRedisLockReleaserPlugin;
 
 class SessionDependencyProvider extends SprykerSessionDependencyProvider
@@ -25,16 +24,6 @@ class SessionDependencyProvider extends SprykerSessionDependencyProvider
             new SessionHandlerRedisProviderPlugin(),
             new SessionHandlerRedisLockingProviderPlugin(),
             new SessionHandlerFileProviderPlugin(),
-        ];
-    }
-
-    /**
-     * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
-     */
-    protected function getYvesSessionLockReleaserPlugins(): array
-    {
-        return [
-            new YvesSessionRedisLockReleaserPlugin(),
         ];
     }
 

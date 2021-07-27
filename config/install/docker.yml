@@ -6,17 +6,11 @@ sections:
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
-        router-cache-warmup-yves:
-            command: 'vendor/bin/yves router:cache:warm-up'
-
         router-cache-warmup-backoffice:
             command: 'vendor/bin/console router:cache:warm-up:backoffice'
 
         router-cache-warmup-backend-gateway:
             command: 'vendor/bin/console router:cache:warm-up:backend-gateway'
-
-        router-cache-warmup-merchant-portal:
-            command: 'vendor/bin/console router:cache:warm-up:merchant-portal'
 
         twig-cache-warmup:
             command: 'vendor/bin/console twig:cache:warmer'
@@ -49,8 +43,8 @@ sections:
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
-        generate-transfer-databuilders:
-            command: 'vendor/bin/console transfer:databuilder:generate'
+#        generate-transfer-databuilders:
+#            command: 'vendor/bin/console transfer:databuilder:generate'
 
         generate-auto-completion:
             command: 'vendor/bin/console dev:ide-auto-completion:generate'
@@ -62,43 +56,12 @@ sections:
         dependencies-install:
             command: 'vendor/bin/console frontend:project:install-dependencies'
 
-        yves-install-dependencies:
-            command: 'vendor/bin/console frontend:yves:install-dependencies'
-
         zed-install-dependencies:
             command: 'vendor/bin/console frontend:zed:install-dependencies'
 
-        merchant-portal-install-dependencies:
-            command: 'console frontend:mp:install-dependencies | tail -100 && echo "Output trimmed, only last 100 lines shown."'
-
-    build-static-production:
-        excluded: true
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build -e production'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build -e production'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
-        date-time-product-configurator:
-            command: 'vendor/bin/console frontend:date-time-product-configurator:build'
-
     build-static-development:
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build'
-
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
-
-        date-time-product-configurator:
-            command: 'vendor/bin/console frontend:date-time-product-configurator:build'
 
     scheduler-setup:
         jenkins-setup:
@@ -148,6 +111,3 @@ sections:
     demodata:
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
-
-        update-product-labels:
-            command: 'vendor/bin/console product-label:relations:update'

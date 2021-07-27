@@ -13,10 +13,6 @@ use Spryker\Shared\Twig\Plugin\FormTwigPlugin;
 use Spryker\Shared\Twig\Plugin\RoutingTwigPlugin;
 use Spryker\Shared\Twig\Plugin\SecurityTwigPlugin;
 use Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin;
-use Spryker\Zed\Barcode\Plugin\Twig\BarcodeTwigPlugin;
-use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartGuiTwigPlugin;
-use Spryker\Zed\CmsBlock\Communication\Plugin\Twig\CmsBlockTemplateTwigLoaderPlugin;
-use Spryker\Zed\CmsBlock\Communication\Plugin\Twig\CmsBlockTwigExtensionPlugin;
 use Spryker\Zed\Currency\Communication\Plugin\Twig\CurrencyTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonTwigPlugin;
@@ -37,7 +33,6 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin;
-use Spryker\Zed\GuiTable\Communication\Plugin\Twig\GuiTableConfigurationTwigPlugin;
 use Spryker\Zed\Http\Communication\Plugin\Twig\HttpKernelTwigPlugin;
 use Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin;
 use Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin;
@@ -49,8 +44,6 @@ use Spryker\Zed\Twig\TwigDependencyProvider as SprykerTwigDependencyProvider;
 use Spryker\Zed\User\Communication\Plugin\Twig\UserTwigPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\Twig\WebProfilerTwigLoaderPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin;
-use Spryker\Zed\ZedUi\Communication\Plugin\Twig\BooleanToStringTwigPlugin;
-use Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin;
 
 class TwigDependencyProvider extends SprykerTwigDependencyProvider
 {
@@ -68,17 +61,13 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new RuntimeLoaderTwigPlugin(),
             new FormRuntimeLoaderTwigPlugin(),
             new ApplicationTwigPlugin(),
-            new ChartGuiTwigPlugin(),
             new UserTwigPlugin(),
             new MoneyTwigPlugin(),
             new CurrencyTwigPlugin(),
             new ZedNavigationTwigPlugin(),
             new TranslatorTwigPlugin(),
             new DateTimeFormatterTwigPlugin(),
-            new ZedUiNavigationTwigPlugin(),
             new SchedulerTwigPlugin(),
-            new BarcodeTwigPlugin(),
-            new CmsBlockTwigExtensionPlugin(),
 
             new AssetsPathTwigPlugin(),
             new TabsTwigPlugin(),
@@ -100,8 +89,6 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             // Form buttons
             new SubmitButtonTwigPlugin(),
             new GuiFilterTwigPlugin(),
-            new BooleanToStringTwigPlugin(),
-            new GuiTableConfigurationTwigPlugin(),
         ];
     }
 
@@ -114,7 +101,6 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new FilesystemTwigLoaderPlugin(),
             new FormFilesystemTwigLoaderPlugin(),
             new GuiTwigLoaderPlugin(),
-            new CmsBlockTemplateTwigLoaderPlugin(),
         ];
 
         if (class_exists(WebProfilerTwigLoaderPlugin::class)) {

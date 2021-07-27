@@ -2,9 +2,7 @@ env:
     APPLICATION_ENV: development
 
 stores:
-    - DE
-    - AT
-    - US
+    - GLOBAL
 
 command-timeout: 3600
 
@@ -135,8 +133,7 @@ sections:
             command: 'vendor/bin/console propel:database:drop'
             pre: 'hidden/maintenance-zed-on'
             stores:
-                - US
-                - DE
+                - GLOBAL
             groups:
                 - propel
 
@@ -149,16 +146,14 @@ sections:
         propel-create:
             command: 'vendor/bin/console propel:database:create'
             stores:
-                - US
-                - DE
+                - GLOBAL
             groups:
                 - propel
 
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat'
             stores:
-                - US
-                - DE
+                - GLOBAL
             groups:
                 - propel
 
@@ -181,8 +176,7 @@ sections:
             command: 'vendor/bin/console propel:migration:check'
             breakOnFailure: false
             stores:
-                - US
-                - DE
+                - GLOBAL
             groups:
                 - propel
 
@@ -196,8 +190,7 @@ sections:
         propel-migrate:
             command: 'vendor/bin/console propel:migrate'
             stores:
-                - US
-                - DE
+                - GLOBAL
             groups:
                 - propel
 
@@ -215,8 +208,7 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db'
             stores:
-                - US
-                - DE
+                - GLOBAL
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
@@ -241,18 +233,17 @@ sections:
         import-eu-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
             stores:
-                - DE
+                - GLOBAL
 
         import-us-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_US.yml'
             stores:
-                - US
+                - GLOBAL
 
         update-product-labels:
             command: 'vendor/bin/console product-label:relations:update'
             stores:
-                - US
-                - DE
+                - GLOBAL
 
     jenkins-up:
         jenkins-generate:

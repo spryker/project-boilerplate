@@ -2,9 +2,7 @@
 
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
-use Spryker\Shared\Api\ApiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
@@ -13,8 +11,6 @@ use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\PropelOrm\PropelOrmConstants;
 use Spryker\Shared\Queue\QueueConfig;
@@ -24,7 +20,6 @@ use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
 use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
@@ -43,9 +38,7 @@ $config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[ShopApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
-$config[ApiConstants::ENABLE_API_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_PROPEL_ENABLED');
-$config[CalculationPageConstants::ENABLE_CART_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[ErrorPageConstants::ENABLE_ERROR_404_STACK_TRACE] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
@@ -109,22 +102,6 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
     );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ FRONTEND ------------------------------------
-// ----------------------------------------------------------------------------
-
-    $yvesHost = getenv('SPRYKER_FE_HOST');
-    $yvesPort = (int)(getenv('SPRYKER_FE_PORT')) ?: 80;
-    $config[ApplicationConstants::BASE_URL_YVES]
-        = $config[CustomerConstants::BASE_URL_YVES]
-        = $config[ProductManagementConstants::BASE_URL_YVES]
-        = $config[NewsletterConstants::BASE_URL_YVES]
-        = sprintf(
-            'http://%s%s',
-            $yvesHost,
-            $yvesPort !== 80 ? ':' . $yvesPort : ''
-        );
-
-// ----------------------------------------------------------------------------
 // ------------------------------ API -----------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -140,17 +117,3 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         $config[TestifyConstants::GLUE_APPLICATION_DOMAIN] = $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN];
     }
 }
-
-// ----------------------------------------------------------------------------
-// ------------------------------ OMS -----------------------------------------
-// ----------------------------------------------------------------------------
-
-require 'common/config_oms-development.php';
-
-// ----------------------------------------------------------------------------
-// ------------------------------ PAYMENTS ------------------------------------
-// ----------------------------------------------------------------------------
-
-// >>> PAYONE
-
-require 'common/config_payone-development.php';
