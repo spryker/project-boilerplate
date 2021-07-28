@@ -34,7 +34,7 @@ class ProductConcreteSql implements ProductConcreteSqlInterface
              unnest(? :: VARCHAR []) AS sku_product_abstract
          ) input
       LEFT JOIN spy_product ON spy_product.sku = input.concrete_sku
-      INNER JOIN spy_product_abstract a on sku_product_abstract = a.sku 
+      INNER JOIN spy_product_abstract a on sku_product_abstract = a.sku
 ),
     updated AS (
     UPDATE spy_product

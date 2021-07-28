@@ -9,16 +9,13 @@ namespace Pyz\Zed\Application;
 
 use Spryker\Zed\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
 use Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin;
-use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\BackendApiEventDispatcherApplicationPlugin;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\BackendGatewayEventDispatcherApplicationPlugin;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin;
-use Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin;
 use Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin;
 use Spryker\Zed\Locale\Communication\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
-use Spryker\Zed\Router\Communication\Plugin\Application\BackendApiRouterApplicationPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Application\BackendGatewayRouterApplicationPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Application\BackofficeRouterApplicationPlugin;
 use Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin;
@@ -59,7 +56,6 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new ErrorHandlerApplicationPlugin(),
             new FormApplicationPlugin(),
             new ValidatorApplicationPlugin(),
-            new GuiTableApplicationPlugin(),
             new SecurityApplicationPlugin(),
         ];
 
@@ -83,23 +79,6 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new PropelApplicationPlugin(),
             new BackendGatewayRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
-        ];
-    }
-
-    /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
-     */
-    protected function getBackendApiApplicationPlugins(): array
-    {
-        return [
-            new BackendApiEventDispatcherApplicationPlugin(),
-            new LocaleApplicationPlugin(),
-            new TranslatorApplicationPlugin(),
-            new PropelApplicationPlugin(),
-            new BackendApiRouterApplicationPlugin(),
-            new HttpApplicationPlugin(),
-            new ErrorHandlerApplicationPlugin(),
-            new ValidatorApplicationPlugin(),
         ];
     }
 }

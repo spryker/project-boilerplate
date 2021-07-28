@@ -8,8 +8,6 @@
 namespace Pyz\Zed\EventDispatcher;
 
 use Spryker\Shared\Http\Plugin\EventDispatcher\ResponseListenerEventDispatcherPlugin;
-use Spryker\Zed\Acl\Communication\Plugin\EventDispatcher\AccessControlEventDispatcherPlugin;
-use Spryker\Zed\Api\Communication\Plugin\EventDispatcher\ApiControllerEventDispatcherPlugin;
 use Spryker\Zed\Application\Communication\Plugin\EventDispatcher\HeadersSecurityEventDispatcherPlugin;
 use Spryker\Zed\EventBehavior\Communication\Plugin\EventDispatcher\EventBehaviorEventDispatcherPlugin;
 use Spryker\Zed\EventDispatcher\EventDispatcherDependencyProvider as SprykerEventDispatcherDependencyProvider;
@@ -38,7 +36,6 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
     protected function getEventDispatcherPlugins(): array
     {
         return [
-            new AccessControlEventDispatcherPlugin(),
             new EventBehaviorEventDispatcherPlugin(),
             new HeadersSecurityEventDispatcherPlugin(),
             new LocaleEventDispatcherPlugin(),
@@ -82,7 +79,6 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new MonitoringRequestTransactionEventDispatcherPlugin(),
             new RouterListenerEventDispatcherPlugin(),
             new ResponseListenerEventDispatcherPlugin(),
-            new ApiControllerEventDispatcherPlugin(),
             new AutoloaderCacheEventDispatcherPlugin(),
         ];
     }

@@ -1,24 +1,14 @@
 <?php
 
 use Monolog\Logger;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Collector\CollectorConstants;
-use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Queue\QueueConstants;
-use Spryker\Shared\Sales\SalesConstants;
-use Spryker\Shared\Search\SearchConstants;
-use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 use Spryker\Shared\SecuritySystemUser\SecuritySystemUserConstants;
-use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionFile\SessionFileConstants;
@@ -29,7 +19,6 @@ use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\User\UserConstants;
 use Spryker\Shared\ZedNavigation\ZedNavigationConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Spryker\Zed\Oms\OmsConfig;
 
 $config[KernelConstants::PROJECT_NAMESPACES] = [
     'Pyz',
@@ -42,48 +31,6 @@ $config[KernelConstants::CORE_NAMESPACES] = [
 ];
 
 $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
-
-/**
- * Elasticsearch settings
- */
-$config[ApplicationConstants::ELASTICA_PARAMETER__HOST]
-    = $config[SearchElasticsearchConstants::HOST]
-    = 'localhost';
-$config[ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT]
-    = $config[SearchElasticsearchConstants::TRANSPORT]
-    = 'http';
-$config[ApplicationConstants::ELASTICA_PARAMETER__PORT]
-    = $config[SearchElasticsearchConstants::PORT]
-    = '10005';
-$config[ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER]
-    = $config[SearchElasticsearchConstants::AUTH_HEADER]
-    = '';
-$config[ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME]
-    = $config[CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME]
-    = null; // Store related config
-$config[ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE]
-    = $config[CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE]
-    = 'page';
-
-/**
- * Page search settings
- */
-$config[SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE]
-    = $config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;
-
-/**
- * Hostname(s) for Yves - Shop frontend
- * In production you probably use a CDN for static content
- */
-$config[ApplicationConstants::HOST_YVES]
-    = $config[NewsletterConstants::HOST_YVES]
-    = $config[ApplicationConstants::HOST_STATIC_ASSETS]
-    = $config[ApplicationConstants::HOST_STATIC_MEDIA]
-    = $config[ApplicationConstants::HOST_SSL_YVES]
-    = $config[ApplicationConstants::HOST_SSL_STATIC_ASSETS]
-    = $config[ApplicationConstants::HOST_SSL_STATIC_MEDIA]
-    = 'www.de.project.local';
-$config[CustomerConstants::BASE_URL_YVES] = 'www.de.project.local';
 
 /**
  * Hostname(s) for Zed - Shop frontend
@@ -124,21 +71,6 @@ $config[StorageRedisConstants::STORAGE_REDIS_PORT] = 10009;
 $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = false;
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = 0;
 
-$config[SessionConstants::YVES_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS_LOCKING;
-$config[SessionConstants::YVES_SESSION_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_1_HOUR;
-$config[SessionRedisConstants::YVES_SESSION_TIME_TO_LIVE] = $config[SessionConstants::YVES_SESSION_TIME_TO_LIVE];
-$config[SessionFileConstants::YVES_SESSION_TIME_TO_LIVE] = $config[SessionConstants::YVES_SESSION_TIME_TO_LIVE];
-$config[SessionFileConstants::YVES_SESSION_FILE_PATH] = session_save_path();
-$config[SessionConstants::YVES_SESSION_COOKIE_NAME] = $config[ApplicationConstants::HOST_YVES];
-$config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN] = $config[ApplicationConstants::HOST_YVES];
-$config[SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION] = $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION];
-$config[SessionRedisConstants::YVES_SESSION_REDIS_SCHEME] = $config[StorageRedisConstants::STORAGE_REDIS_SCHEME];
-$config[SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL] = $config[StorageRedisConstants::STORAGE_REDIS_PROTOCOL];
-$config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = $config[StorageRedisConstants::STORAGE_REDIS_HOST];
-$config[SessionRedisConstants::YVES_SESSION_REDIS_PORT] = $config[StorageRedisConstants::STORAGE_REDIS_PORT];
-$config[SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD] = $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD];
-$config[SessionRedisConstants::YVES_SESSION_REDIS_DATABASE] = 1;
-
 $config[SessionConstants::ZED_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS;
 $config[SessionConstants::ZED_SESSION_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_1_HOUR;
 $config[SessionRedisConstants::ZED_SESSION_TIME_TO_LIVE] = $config[SessionConstants::ZED_SESSION_TIME_TO_LIVE];
@@ -159,18 +91,8 @@ $config[SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS] = 0;
 
 $config[ZedRequestConstants::ZED_API_SSL_ENABLED] = false;
 
-$config[ErrorHandlerConstants::YVES_ERROR_PAGE] = APPLICATION_ROOT_DIR . '/public/Yves/errorpage/error.html';
 $config[ErrorHandlerConstants::ZED_ERROR_PAGE] = APPLICATION_ROOT_DIR . '/public/Yves/errorpage/error.html';
 $config[ErrorHandlerConstants::ERROR_RENDERER] = WebHtmlErrorRenderer::class;
-
-$config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN] = $config[ApplicationConstants::HOST_YVES];
-$config[ApplicationConstants::YVES_COOKIE_DEVICE_ID_NAME] = 'did';
-$config[ApplicationConstants::YVES_COOKIE_DEVICE_ID_VALID_FOR] = '+5 year';
-$config[ApplicationConstants::YVES_COOKIE_VISITOR_ID_NAME] = 'vid';
-$config[ApplicationConstants::YVES_COOKIE_VISITOR_ID_VALID_FOR] = '+30 minute';
-
-$config[CustomerConstants::CUSTOMER_SECURED_PATTERN] = '(^/login_check$|^/customer|^/wishlist)';
-$config[CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN] = '^/.*';
 
 $currentStore = Store::getInstance()->getStoreName();
 
@@ -196,66 +118,11 @@ $config[SecuritySystemUserConstants::AUTH_DEFAULT_CREDENTIALS] = [
 ];
 
 /**
- * ACL: Allow or disallow of urls for Zed Admin GUI for ALL users
- */
-$config[AclConstants::ACL_DEFAULT_RULES] = [
-    [
-        'bundle' => 'security-merchant-portal-gui',
-        'controller' => 'login',
-        'action' => 'index',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'acl',
-        'controller' => 'index',
-        'action' => 'denied',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'health-check',
-        'controller' => 'index',
-        'action' => 'index',
-        'type' => 'allow',
-    ],
-];
-
-/**
- * ACL: Allow or disallow of urls for Zed Admin GUI
- */
-$config[AclConstants::ACL_USER_RULE_WHITELIST] = [
-    [
-        'bundle' => 'application',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
-
-/**
- * ACL: Special rules for specific users
- */
-$config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
-    'yves_system' => [
-        'rules' => [],
-    ],
-];
-
-/**
  * Zed Navigation Cache
  * The cache should always be activated. Refresh/build with CLI command:
  * vendor/bin/console application:build-navigation-cache
  */
 $config[ZedNavigationConstants::ZED_NAVIGATION_CACHE_ENABLED] = true;
-
-$config[SequenceNumberConstants::ENVIRONMENT_PREFIX]
-    = $config[SalesConstants::ENVIRONMENT_PREFIX]
-    = '';
 
 // Due to some deprecation notices we silence all deprecations for the time being
 $config[ErrorHandlerConstants::ERROR_LEVEL] = E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED;
@@ -265,35 +132,6 @@ $config[ErrorHandlerConstants::ERROR_LEVEL] = E_ALL & ~E_DEPRECATED & ~E_USER_DE
 //$config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEPRECATED;
 
 $config[ApplicationConstants::ENABLE_WEB_PROFILER] = false;
-
-$config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
-    'CheckoutPage' => [
-        'DummyPayment',
-    ],
-];
-
-$config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
-    'Payment' => [
-        'DummyPayment',
-    ],
-    'Oms' => [
-        'DummyPayment',
-    ],
-];
-
-$config[OmsConstants::PROCESS_LOCATION] = [
-    OmsConfig::DEFAULT_PROCESS_LOCATION,
-    $config[KernelConstants::SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms',
-];
-
-$config[OmsConstants::ACTIVE_PROCESSES] = [
-    'DummyPayment01',
-];
-
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',
-    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',
-];
 
 /*
  * Queues can have different adapters and maximum worker number

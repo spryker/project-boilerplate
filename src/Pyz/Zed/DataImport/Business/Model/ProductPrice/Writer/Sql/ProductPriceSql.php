@@ -104,7 +104,7 @@ class ProductPriceSql implements ProductPriceSqlInterface
              unnest(?::VARCHAR []) AS name,
              unnest(?::INTEGER[]) AS price_mode_configuration,
              unnest(?::INTEGER[]) AS order_key
-         ) input    
+         ) input
       LEFT JOIN spy_price_type ON spy_price_type.name = input.name
 ),
     updated AS (
@@ -179,9 +179,9 @@ class ProductPriceSql implements ProductPriceSqlInterface
           price_data_checksum = records.price_data_checksum
         FROM records
         WHERE spy_price_product_store.fk_price_product = records.id_price_product AND
-              spy_price_product_store.fk_store = records.id_store AND 
+              spy_price_product_store.fk_store = records.id_store AND
               spy_price_product_store.fk_currency = records.id_currency
-        RETURNING idPriceProductStore as id_price_product_store      
+        RETURNING idPriceProductStore as id_price_product_store
       ),
         inserted AS (
             INSERT INTO spy_price_product_store (
@@ -224,7 +224,7 @@ SELECT updated.id_price_product_store FROM updated UNION ALL SELECT inserted.id_
     FROM (
            SELECT
              unnest(?::INTEGER[]) AS id_price_product_store
-         ) input    
+         ) input
       LEFT JOIN spy_price_product_default ON spy_price_product_default.fk_price_product_store = input.id_price_product_store
 ),
     updated AS (

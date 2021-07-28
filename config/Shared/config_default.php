@@ -2,52 +2,29 @@
 
 use Monolog\Logger;
 use Pyz\Shared\Scheduler\SchedulerConfig;
-use Pyz\Yves\ShopApplication\YvesBootstrap;
-use Pyz\Zed\Application\Communication\ZedBootstrap;
 use Spryker\Client\RabbitMq\Model\RabbitMqAdapter;
 use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
-use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
-use Spryker\Shared\Agent\AgentConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
-use Spryker\Shared\Category\CategoryConstants;
-use Spryker\Shared\CmsGui\CmsGuiConstants;
-use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DataImport\DataImportConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\EventBehavior\EventBehaviorConstants;
-use Spryker\Shared\FileManager\FileManagerConstants;
-use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
-use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
-use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\Oauth\OauthConstants;
-use Spryker\Shared\OauthCryptography\OauthCryptographyConstants;
-use Spryker\Shared\Oms\OmsConstants;
-use Spryker\Shared\ProductConfiguration\ProductConfigurationConstants;
-use Spryker\Shared\ProductLabel\ProductLabelConstants;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\RabbitMq\RabbitMqEnv;
 use Spryker\Shared\Router\RouterConstants;
-use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Shared\Scheduler\SchedulerConstants;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
-use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
-use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 use Spryker\Shared\SecuritySystemUser\SecuritySystemUserConstants;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
@@ -55,19 +32,14 @@ use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\Translator\TranslatorConstants;
 use Spryker\Shared\User\UserConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Spryker\Yves\Log\Plugin\YvesLoggerConfigPlugin;
+use Spryker\Yves\Application\YvesBootstrap;
+use Spryker\Zed\Application\Communication\Bootstrap\ZedBootstrap;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
-use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Propel\PropelConfig;
-use SprykerEco\Shared\Payone\PayoneConstants;
-use SprykerEco\Zed\Payone\PayoneConfig;
-use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
-use SprykerShop\Shared\ShopUi\ShopUiConstants;
 use Symfony\Component\HttpFoundation\Cookie;
 
 // ############################################################################
@@ -112,11 +84,6 @@ $config[ErrorHandlerConstants::YVES_ERROR_PAGE] = APPLICATION_ROOT_DIR . '/publi
 $config[ErrorHandlerConstants::ZED_ERROR_PAGE] = APPLICATION_ROOT_DIR . '/public/Backoffice/errorpage/5xx.html';
 $config[ErrorHandlerConstants::ERROR_RENDERER] = WebHtmlErrorRenderer::class;
 
-// >>> CMS
-
-//$config[CmsGuiConstants::CMS_FOLDER_PATH] = '@Cms/templates/';
-$config[CmsGuiConstants::CMS_PAGE_PREVIEW_URI] = '/en/cms/preview/%d';
-
 // >>> TRANSLATOR
 
 $config[TranslatorConstants::TRANSLATION_ZED_FALLBACK_LOCALES] = [
@@ -150,8 +117,6 @@ $trustedHosts
 $config[KernelConstants::DOMAIN_WHITELIST] = array_merge($trustedHosts, [
     $sprykerBackendHost,
     $sprykerFrontendHost,
-    'threedssvc.pay1.de', // trusted Payone domain
-    'www.sofort.com', // trusted Payone domain
 ]);
 $config[KernelConstants::STRICT_DOMAIN_REDIRECT] = true;
 
@@ -176,23 +141,6 @@ $config[LogConstants::LOG_SANITIZE_FIELDS] = [
 // ------------------------------ AUTHENTICATION ------------------------------
 // ----------------------------------------------------------------------------
 
-// >>> OAUTH
-
-$config[OauthConstants::PRIVATE_KEY_PATH] = str_replace(
-    '__LINE__',
-    PHP_EOL,
-    getenv('SPRYKER_OAUTH_KEY_PRIVATE') ?: ''
-) ?: null;
-$config[OauthConstants::PUBLIC_KEY_PATH]
-    = $config[OauthCryptographyConstants::PUBLIC_KEY_PATH]
-    = str_replace(
-        '__LINE__',
-        PHP_EOL,
-        getenv('SPRYKER_OAUTH_KEY_PUBLIC') ?: ''
-    ) ?: null;
-$config[OauthConstants::ENCRYPTION_KEY] = getenv('SPRYKER_OAUTH_ENCRYPTION_KEY') ?: null;
-$config[OauthConstants::OAUTH_CLIENT_IDENTIFIER] = getenv('SPRYKER_OAUTH_CLIENT_IDENTIFIER') ?: null;
-$config[OauthConstants::OAUTH_CLIENT_SECRET] = getenv('SPRYKER_OAUTH_CLIENT_SECRET') ?: null;
 
 // >> ZED REQUEST
 
@@ -202,65 +150,6 @@ $config[UserConstants::USER_SYSTEM_USERS] = [
 $config[SecuritySystemUserConstants::AUTH_DEFAULT_CREDENTIALS] = [
     'yves_system' => [
         'token' => getenv('SPRYKER_ZED_REQUEST_TOKEN') ?: '',
-    ],
-];
-
-// ACL: Special rules for specific users
-$config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
-    'yves_system' => [
-        'rules' => [
-            [
-                'bundle' => '*',
-                'controller' => 'gateway',
-                'action' => '*',
-                'type' => 'allow',
-            ],
-        ],
-    ],
-];
-
-// >> BACKOFFICE
-
-// ACL: Allow or disallow of urls for Zed Admin GUI for ALL users
-$config[AclConstants::ACL_DEFAULT_RULES] = [
-    [
-        'bundle' => 'security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'acl',
-        'controller' => 'index',
-        'action' => 'denied',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'health-check',
-        'controller' => 'index',
-        'action' => 'index',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'api',
-        'controller' => 'rest',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
-// ACL: Allow or disallow of urls for Zed Admin GUI
-$config[AclConstants::ACL_USER_RULE_WHITELIST] = [
-    [
-        'bundle' => 'application',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
     ],
 ];
 
@@ -284,16 +173,6 @@ $config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 // >>> DATA IMPORT
 $config[DataImportConstants::IS_BULK_MODE_ENABLED] = false;
 
-// >>> SEARCH
-
-$config[SearchElasticsearchConstants::HOST] = getenv('SPRYKER_SEARCH_HOST');
-$config[SearchElasticsearchConstants::TRANSPORT] = getenv('SPRYKER_SEARCH_PROTOCOL') ?: 'http';
-$config[SearchElasticsearchConstants::PORT] = getenv('SPRYKER_SEARCH_PORT');
-$config[SearchElasticsearchConstants::AUTH_HEADER] = getenv('SPRYKER_SEARCH_BASIC_AUTH') ?: null;
-$config[SearchElasticsearchConstants::INDEX_PREFIX] = getenv('SPRYKER_SEARCH_INDEX_PREFIX') ?: '';
-
-$config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;
-
 // >>> STORAGE
 
 $config[StorageConstants::STORAGE_KV_SOURCE] = strtolower(getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')) ?: 'redis';
@@ -313,31 +192,12 @@ $config[SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS] = 0;
 $config[SessionRedisConstants::LOCKING_RETRY_DELAY_MICROSECONDS] = 0;
 $config[SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS] = 0;
 
-// >>> SESSION FRONTEND
-
-$config[SessionConstants::YVES_SESSION_COOKIE_NAME]
-    = $config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN]
-    = $sprykerFrontendHost;
-$config[SessionConstants::YVES_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS_LOCKING;
-$config[SessionRedisConstants::YVES_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_FE_PROTOCOL') ?: 'tcp';
-$config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_FE_HOST');
-$config[SessionRedisConstants::YVES_SESSION_REDIS_PORT] = getenv('SPRYKER_SESSION_FE_PORT');
-$config[SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD] = getenv('SPRYKER_SESSION_FE_PASSWORD');
-$config[SessionRedisConstants::YVES_SESSION_REDIS_DATABASE] = getenv('SPRYKER_SESSION_FE_NAMESPACE') ?: 2;
-
-$config[SessionConstants::YVES_SESSION_TIME_TO_LIVE]
-    = $config[SessionRedisConstants::YVES_SESSION_TIME_TO_LIVE]
-    = SessionConfig::SESSION_LIFETIME_1_HOUR;
-$config[SessionConstants::YVES_SESSION_COOKIE_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_0_5_HOUR;
-$config[SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION]
-    = $config[SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION]
-    = true;
-
 // >>> SESSION BACKOFFICE
 
 $config[SessionConstants::ZED_SESSION_COOKIE_NAME]
     = $config[SessionConstants::ZED_SESSION_COOKIE_DOMAIN]
     = $sprykerBackendHost;
+
 $config[SessionConstants::ZED_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS;
 $config[SessionRedisConstants::ZED_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_BE_PROTOCOL') ?: 'tcp';
 $config[SessionRedisConstants::ZED_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_BE_HOST');
@@ -350,15 +210,7 @@ $config[SessionConstants::ZED_SESSION_TIME_TO_LIVE]
     = SessionConfig::SESSION_LIFETIME_1_HOUR;
 $config[SessionConstants::ZED_SESSION_COOKIE_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_BROWSER_SESSION;
 $config[SessionConstants::ZED_SESSION_COOKIE_SAMESITE] = getenv('SPRYKER_ZED_SESSION_COOKIE_SAMESITE') ?: Cookie::SAMESITE_STRICT;
-
-// >>> REDIS SECURITY BLOCKER
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION] = true;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_STORE_PASSWORD');
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE] = 7;
-
+$config[SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION] = true;
 // >>> LOGGING
 
 // Due to some deprecation notices we silence all deprecations for the time being
@@ -367,7 +219,6 @@ $config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEP
 
 $config[LogConstants::LOGGER_CONFIG] = SprykerLoggerConfig::class;
 $config[LogConstants::LOGGER_CONFIG_ZED] = ZedLoggerConfigPlugin::class;
-$config[LogConstants::LOGGER_CONFIG_YVES] = YvesLoggerConfigPlugin::class;
 $config[LogConstants::LOGGER_CONFIG_GLUE] = GlueLoggerConfigPlugin::class;
 
 $config[LogConstants::LOG_QUEUE_NAME] = 'log-queue';
@@ -438,6 +289,7 @@ foreach ($rabbitConnections as $key => $connection) {
 $config[SchedulerConstants::ENABLED_SCHEDULERS] = [
     SchedulerConfig::SCHEDULER_JENKINS,
 ];
+
 $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
     SchedulerConfig::SCHEDULER_JENKINS => [
         SchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL => sprintf(
@@ -450,34 +302,6 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
 ];
 
 $config[SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;
-
-// >>> MAIL
-$config[MailConstants::SMTP_HOST] = getenv('SPRYKER_SMTP_HOST') ?: null;
-$config[MailConstants::SMTP_PORT] = getenv('SPRYKER_SMTP_PORT') ?: null;
-$config[MailConstants::SMTP_ENCRYPTION] = getenv('SPRYKER_SMTP_ENCRYPTION') ?: null;
-$config[MailConstants::SMTP_AUTH_MODE] = getenv('SPRYKER_SMTP_AUTH_MODE') ?: null;
-$config[MailConstants::SMTP_USERNAME] = getenv('SPRYKER_SMTP_USERNAME') ?: null;
-$config[MailConstants::SMTP_PASSWORD] = getenv('SPRYKER_SMTP_PASSWORD') ?: null;
-
-$config[MailConstants::SENDER_EMAIL] = getenv('SPRYKER_MAIL_SENDER_EMAIL') ?: null;
-$config[MailConstants::SENDER_NAME] = getenv('SPRYKER_MAIL_SENDER_NAME') ?: null;
-
-// >>> Customer
-$config[CustomerConstants::CUSTOMER_SECURED_PATTERN] = '(^/login_check$|^(/en|/de)?/customer($|/)|^(/en|/de)?/wishlist($|/)|^(/en|/de)?/shopping-list($|/)|^(/en|/de)?/quote-request($|/)|^(/en|/de)?/comment($|/)|^(/en|/de)?/company(?!/register)($|/)|^(/en|/de)?/multi-cart($|/)|^(/en|/de)?/shared-cart($|/)|^(/en|/de)?/cart(?!/add)($|/)|^(/en|/de)?/checkout($|/))';
-$config[CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN] = '^/.*';
-$config[CustomerPageConstants::CUSTOMER_REMEMBER_ME_SECRET] = 'hundnase';
-$config[CustomerPageConstants::CUSTOMER_REMEMBER_ME_LIFETIME] = 31536000;
-
-// >>> FILESYSTEM
-$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
-    'files' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
-        'path' => 'files/',
-    ],
-];
-$config[FileManagerConstants::STORAGE_NAME] = 'files';
-$config[FileManagerGuiConstants::DEFAULT_FILE_MAX_SIZE] = '10M';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ ZED -----------------------------------------
@@ -512,25 +336,6 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ FRONTEND ------------------------------------
-// ----------------------------------------------------------------------------
-
-$yvesHost = $config[ApplicationConstants::HOST_YVES] = $sprykerFrontendHost;
-$yvesPort = (int)(getenv('SPRYKER_FE_PORT')) ?: 443;
-
-$config[ApplicationConstants::BASE_URL_YVES]
-    = $config[CustomerConstants::BASE_URL_YVES]
-    = $config[ProductManagementConstants::BASE_URL_YVES]
-    = $config[NewsletterConstants::BASE_URL_YVES]
-    = sprintf(
-        'https://%s%s',
-        $yvesHost,
-        $yvesPort !== 443 ? ':' . $yvesPort : ''
-    );
-
-$config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] = '/assets/' . (getenv('SPRYKER_BUILD_HASH') ?: 'current') . '/%theme%/';
-
-// ----------------------------------------------------------------------------
 // ------------------------------ API -----------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -548,91 +353,3 @@ if (class_exists(TestifyConstants::class)) {
 }
 
 $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '';
-
-// ----------------------------------------------------------------------------
-// ------------------------------ OMS -----------------------------------------
-// ----------------------------------------------------------------------------
-
-$config[OmsConstants::PROCESS_LOCATION] = [
-    OmsConfig::DEFAULT_PROCESS_LOCATION,
-    APPLICATION_ROOT_DIR . '/vendor/spryker-eco/payone/config/Zed/Oms',
-];
-$config[OmsConstants::ACTIVE_PROCESSES] = [
-    'PayoneCreditCardPartialOperations',
-    'PayoneOnlineTransferPartialOperations',
-];
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    PayoneConfig::PAYMENT_METHOD_CREDIT_CARD => 'PayoneCreditCardPartialOperations',
-    PayoneConfig::PAYMENT_METHOD_INSTANT_ONLINE_TRANSFER => 'PayoneOnlineTransferPartialOperations',
-];
-
-// ----------------------------------------------------------------------------
-// ------------------------------ PAYMENTS ------------------------------------
-// ----------------------------------------------------------------------------
-
-// >>> Taxes
-$config[TaxConstants::DEFAULT_TAX_RATE] = 19;
-
-// >>> Payone
-$payOneCredentials = json_decode(getenv('SPRYKER_PAYONE_CREDENTIALS') ?: 'null', true) ?: [
-    [
-        'KEY' => '',
-        'MID' => '',
-        'AID' => '',
-        'PORTAL_ID' => '',
-    ],
-];
-
-[$firstPayOneCredentials] = $payOneCredentials;
-
-$config[PayoneConstants::PAYONE] = [
-    PayoneConstants::PAYONE_CREDENTIALS_ENCODING => 'UTF-8',
-    PayoneConstants::PAYONE_CREDENTIALS_KEY => $firstPayOneCredentials['KEY'],
-    PayoneConstants::PAYONE_CREDENTIALS_MID => $firstPayOneCredentials['MID'],
-    PayoneConstants::PAYONE_CREDENTIALS_AID => $firstPayOneCredentials['AID'],
-    PayoneConstants::PAYONE_CREDENTIALS_PORTAL_ID => $firstPayOneCredentials['PORTAL_ID'],
-    PayoneConstants::PAYONE_PAYMENT_GATEWAY_URL => 'https://api.pay1.de/post-gateway/',
-    PayoneConstants::PAYONE_MODE => PayoneConstants::PAYONE_MODE_LIVE,
-    PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER => 0,
-    PayoneConstants::HOST_YVES => $config[ApplicationConstants::BASE_URL_YVES],
-    PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL => sprintf(
-        '%s/payone/payment-success',
-        $config[ApplicationConstants::BASE_URL_YVES]
-    ),
-    PayoneConstants::PAYONE_REDIRECT_ERROR_URL => sprintf(
-        '%s/payone/payment-failure',
-        $config[ApplicationConstants::BASE_URL_YVES]
-    ),
-    PayoneConstants::PAYONE_REDIRECT_BACK_URL => sprintf(
-        '%s/payone/regular-redirect-payment-cancellation',
-        $config[ApplicationConstants::BASE_URL_YVES]
-    ),
-];
-// >>> Product Configuration
-$config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: 'change123';
-$config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '0c1ffefeebdab4a3d839d0e52590c9a2';
-$config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST');
-
-// >>> Product Relation
-$config[ProductRelationConstants::PRODUCT_RELATION_READ_CHUNK] = 1000;
-$config[ProductRelationConstants::PRODUCT_RELATION_UPDATE_CHUNK] = 1000;
-
-// >>> Security Blocker
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 10;
-
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCK_FOR] = 360;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS] = 9;
-
-// >>> Product Label
-$config[ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE] = 1000;
-
-// >>> Category
-$config[CategoryConstants::CATEGORY_READ_CHUNK] = 10000;
-$config[CategoryConstants::CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED] = false;
-
-// >>> Agent
-$config[AgentConstants::AGENT_ALLOWED_SECURED_PATTERN_LIST] = [
-    '|^(/en|/de)?/cart(?!/add)',
-];

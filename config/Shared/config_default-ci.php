@@ -3,7 +3,6 @@
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
@@ -14,15 +13,11 @@ use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\Mail\MailConstants;
-use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\RabbitMq\RabbitMqEnv;
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Shared\Scheduler\SchedulerConstants;
-use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
@@ -102,12 +97,6 @@ require 'common/config_logs-ci-info.php';
 // config_default-ci.mysql.php
 // config_default-ci.pgsql.php
 
-// >>> SEARCH
-
-$config[SearchElasticsearchConstants::HOST] = 'localhost';
-$config[SearchElasticsearchConstants::TRANSPORT] = 'http';
-$config[SearchElasticsearchConstants::PORT] = 9200;
-
 // >>> STORAGE
 
 $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION] = true;
@@ -176,10 +165,6 @@ $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = array_map(static function ($storeNa
 
 $config[LogConstants::LOG_LEVEL] = Logger::CRITICAL;
 
-// >>> EMAIL
-
-$config[MailConstants::SMTP_PORT] = 1025;
-
 // ----------------------------------------------------------------------------
 // ------------------------------ ZED (Gateway) -------------------------------
 // ----------------------------------------------------------------------------
@@ -211,24 +196,6 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ FRONTEND ------------------------------------
-// ----------------------------------------------------------------------------
-
-$config[ApplicationConstants::HOST_YVES]
-    = $config[SessionConstants::YVES_SESSION_COOKIE_NAME]
-    = $config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN]
-    = $yvesHost;
-
-$config[ApplicationConstants::BASE_URL_YVES]
-    = $config[CustomerConstants::BASE_URL_YVES]
-    = $config[ProductManagementConstants::BASE_URL_YVES]
-    = $config[NewsletterConstants::BASE_URL_YVES]
-    = sprintf(
-        'http://%s',
-        $yvesHost
-    );
-
-// ----------------------------------------------------------------------------
 // ------------------------------ API -----------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -243,25 +210,3 @@ if (class_exists(TestifyConstants::class)) {
 }
 
 $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = '*';
-
-// >>> Security Blocker
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 10;
-
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCK_FOR] = 360;
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS] = 9;
-
-// ----------------------------------------------------------------------------
-// ------------------------------ OMS -----------------------------------------
-// ----------------------------------------------------------------------------
-
-require 'common/config_oms-development.php';
-
-// ----------------------------------------------------------------------------
-// ------------------------------ PAYMENTS ------------------------------------
-// ----------------------------------------------------------------------------
-
-// >>> PAYONE
-
-require 'common/config_payone-development.php';

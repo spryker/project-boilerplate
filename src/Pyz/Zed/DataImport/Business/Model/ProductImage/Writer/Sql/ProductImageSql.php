@@ -28,8 +28,8 @@ class ProductImageSql implements ProductImageSqlInterface
          unnest(? :: INTEGER []) AS fkProductAbstract
       ) input
       LEFT JOIN spy_product_image_set ON
-        spy_product_image_set.name = input.name 
-        AND spy_product_image_set.fk_locale = input.fkLocale 
+        spy_product_image_set.name = input.name
+        AND spy_product_image_set.fk_locale = input.fkLocale
         AND (spy_product_image_set.fk_product_abstract = input.fkProductAbstract OR spy_product_image_set.fk_product = input.fkProduct)
       WHERE spy_product_image_set.id_product_image_set IS NULL
 )
@@ -62,7 +62,7 @@ class ProductImageSql implements ProductImageSqlInterface
      */
     public function createOrUpdateProductImageSQL(): string
     {
-        $sql = "WITH 
+        $sql = "WITH
     records AS (
         SELECT
           input.externalUrlLarge,
@@ -103,7 +103,7 @@ class ProductImageSql implements ProductImageSqlInterface
         SET external_url_large = externalUrlLarge,
             external_url_small = externalUrlSmall
         FROM records
-        WHERE idProductImage IS NOT NULL 
+        WHERE idProductImage IS NOT NULL
             AND product_image_key = productImageKey
         RETURNING id_product_image
     )
@@ -137,20 +137,20 @@ class ProductImageSql implements ProductImageSqlInterface
                 unnest(? :: VARCHAR []) AS productImageKey
             ) input
             INNER JOIN spy_product_image_set ON
-                spy_product_image_set.name = input.name 
-                AND fk_locale = fkLocale 
+                spy_product_image_set.name = input.name
+                AND fk_locale = fkLocale
                 AND (fk_product = fkProduct OR fk_product_abstract = fkProductAbstract)
             INNER JOIN spy_product_image ON
                 product_image_key = productImageKey
-            LEFT JOIN spy_product_image_set_to_product_image ON 
-                fk_product_image = id_product_image 
+            LEFT JOIN spy_product_image_set_to_product_image ON
+                fk_product_image = id_product_image
                 AND fk_product_image_set = id_product_image_set
     ),
     updated AS (
         UPDATE spy_product_image_set_to_product_image
         SET sort_order = records.sort_order
         FROM records
-        WHERE id_product_image = fk_product_image 
+        WHERE id_product_image = fk_product_image
             AND id_product_image_set = fk_product_image_set
     ),
     inserted AS(
@@ -179,7 +179,7 @@ class ProductImageSql implements ProductImageSqlInterface
      */
     public function findProductImageSetsByProductImageIds(): string
     {
-        $sql = "WITH 
+        $sql = "WITH
     touched_product_images as (
         SELECT unnest((? :: INTEGER [])) as id_product_image
     )
