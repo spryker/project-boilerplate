@@ -1,11 +1,11 @@
-# Spryker FaaS Launchpad
-[![Build Status](https://github.com/spryker/faas-launchpad/workflows/CI/badge.svg)](https://github.com/spryker/faas-launchpad/actions?query=workflow%3ACI)
+# Spryker project boilerplate
+[![Build Status](https://github.com/spryker/project-boilerplate/workflows/CI/badge.svg)](https://github.com/spryker/faas-launchpad/actions?query=workflow%3ACI)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 License: [MIT](LICENSE)
 
 ## Vagrant Installation
-In order to install the FaaS Launchpad on your machine, you can follow the instructions described in the link below:
+In order to install the application boilerplate on your machine, you can follow the instructions described in the link below:
 
 For DevVM based installation instructions, see [About the Installation Guides](https://documentation.spryker.com/docs/about-installation).
 
@@ -36,8 +36,8 @@ Recommended system requirements for MacOS:
 
 Run the commands:
 ```bash
-mkdir faas_launchpad && cd faas_launchpad
-git clone git@github.com:spryker/faas-launchpad.git .
+mkdir project-boilerplate && cd project-boilerplate
+git clone git@github.com:spryker/project-boilerplate.git .
 git clone git@github.com:spryker/docker-sdk.git docker
 ```
 

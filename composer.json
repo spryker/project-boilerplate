@@ -1,6 +1,6 @@
 {
-    "name": "spryker/faas-launchpad",
-    "description": "Spryker FaaS Launchpad",
+    "name": "spryker/project-boilerplate",
+    "description": "Spryker project boilerplate",
     "license": "MIT",
     "require": {
         "php": ">=7.3",
