@@ -17,6 +17,7 @@
         "ext-readline": "*",
         "ext-redis": "*",
         "psr/cache": "1.0.1",
+        "spryker-feature/customer-account-management": "dev-master",
         "spryker-feature/deployment-tools": "dev-master",
         "spryker-feature/spryker-core": "dev-master",
         "spryker/documentation-generator-rest-api": "*",
