@@ -44,4 +44,6 @@ $stores['GLOBAL'] = [
     ],
 ];
 
+$stores['DE'] = $stores['GLOBAL'];
+
 return $stores;
