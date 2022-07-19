@@ -21,7 +21,6 @@ sudo cp -f config/Shared/ci/travis/.htaccess public/Backoffice/.htaccess
 sudo cp -f config/Shared/ci/travis/.htaccess public/BackendApi/.htaccess
 sudo cp -f config/Shared/ci/travis/.htaccess public/BackendGateway/.htaccess
 sudo cp -f config/Shared/ci/travis/.htaccess public/Glue/.htaccess
-sudo cp -f config/Shared/ci/travis/.htaccess public/Yves/.htaccess
 
 # apache: virtual hosts configuration
 sudo cp -f config/Shared/ci/travis/travis-ci-apache-backend-api /etc/apache2/sites-available/backend-api.conf
