@@ -386,7 +386,7 @@ version: ~> 1.0
 env:
     global:
         - APPLICATION_ENV=ci.pgsql
-        - APPLICATION_STORE=DE
+        - APPLICATION_STORE=GLOBAL
         - SPRYKER_TESTING_ENABLED=1
         - PROJECT=suite
         - ARTIFACTS_KEY=AKIAJD43J5ACVDJKUXLA
