@@ -13,9 +13,6 @@ sections:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
     cache:
-        router-cache-warmup-yves:
-            command: 'vendor/bin/yves router:cache:warm-up'
-
         router-cache-warmup-backoffice:
             command: 'vendor/bin/console router:cache:warm-up:backoffice'
 
@@ -96,12 +93,6 @@ sections:
     frontend:
         dependencies-install:
             command: 'vendor/bin/console frontend:project:install-dependencies'
-
-        yves-install-dependencies:
-            command: 'vendor/bin/console frontend:yves:install-dependencies'
-
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build'
 
         zed-install-dependencies:
             command: 'vendor/bin/console frontend:zed:install-dependencies'
