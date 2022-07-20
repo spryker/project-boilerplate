@@ -107,8 +107,5 @@ sections:
         import-eu-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_GLOBAL.yml'
 
-        update-product-labels:
-            command: 'vendor/bin/console product-label:relations:update'
-
         publish-and-sync:
             command: 'vendor/bin/console queue:worker:start --stop-when-empty'

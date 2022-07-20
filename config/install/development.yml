@@ -237,11 +237,6 @@ sections:
             stores:
                 - GLOBAL
 
-        update-product-labels:
-            command: 'vendor/bin/console product-label:relations:update'
-            stores:
-                - GLOBAL
-
     jenkins-up:
         jenkins-generate:
             command: 'vendor/bin/console scheduler:setup'
