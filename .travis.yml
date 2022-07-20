@@ -11,6 +11,7 @@ _COMPOSER_PREFER_MID: &COMPOSER_PREFER_MID
 _COMPOSER_PREFER_LOWEST: &COMPOSER_PREFER_LOWEST
     - echo "_COMPOSER_PREFER_LOWEST"
     - COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-lowest --optimize-autoloader --no-interaction --prefer-install=auto
+    - - COMPOSER_MEMORY_LIMIT=-1 composer require --dev dereuromark/composer-prefer-lowest:dev-master --with-all-dependencies;
 
 _SETUP_WEB_INFRASTRUCTURE: &SETUP_WEB_INFRASTRUCTURE
     - echo "_BROWSER_TESTING_BEFORE_INSTALL_SCRIPT"
