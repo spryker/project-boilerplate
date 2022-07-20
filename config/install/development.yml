@@ -80,9 +80,6 @@ sections:
             stores: true
 
     cache:
-        router-cache-warmup-yves:
-            command: 'vendor/bin/yves router:cache:warm-up'
-
         router-cache-warmup-backoffice:
             command: 'vendor/bin/console router:cache:warm-up:backoffice'
 
