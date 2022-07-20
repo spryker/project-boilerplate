@@ -19,7 +19,7 @@
         "psr/cache": "1.0.1",
         "spryker-feature/deployment-tools": "dev-master",
         "spryker-feature/spryker-core": "dev-master",
-        "spryker/documentation-generator-rest-api": "*",
+        "spryker/documentation-generator-rest-api": "^1.15.0",
         "spryker/oauth": "^2.5",
         "spryker/oauth-cryptography": "^1.0",
         "spryker/rest-request-validator": "^1.3.0",
