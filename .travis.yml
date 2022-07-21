@@ -386,7 +386,7 @@ version: ~> 1.0
 env:
     global:
         - APPLICATION_ENV=ci.pgsql
-        - APPLICATION_STORE=DE
+        - APPLICATION_STORE=GLOBAL
         - SPRYKER_TESTING_ENABLED=1
         - PROJECT=suite
         - ARTIFACTS_KEY=AKIAJD43J5ACVDJKUXLA
@@ -445,7 +445,7 @@ jobs:
           before_script:
               - *SETUP_WEB_INFRASTRUCTURE
           script:
-              - vendor/bin/install DE -r ci
+              - vendor/bin/install GLOBAL -r ci
               - mkdir ./database_dump
               - *BACKUP_ELASTICSEARCH
               - *BACKUP_POSTGRES
@@ -469,7 +469,7 @@ jobs:
           before_script:
               - *SETUP_WEB_INFRASTRUCTURE
           script:
-              - vendor/bin/install DE -r ci
+              - vendor/bin/install GLOBAL -r ci
               - mkdir ./database_dump
               - *BACKUP_ELASTICSEARCH
               - *BACKUP_MYSQL
@@ -493,7 +493,7 @@ jobs:
           before_script:
               - *SETUP_WEB_INFRASTRUCTURE
           script:
-              - vendor/bin/install DE -r ci
+              - vendor/bin/install GLOBAL -r ci
               - mkdir ./database_dump
               - *BACKUP_ELASTICSEARCH
           after_success:

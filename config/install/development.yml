@@ -80,9 +80,6 @@ sections:
             stores: true
 
     cache:
-        router-cache-warmup-yves:
-            command: 'vendor/bin/yves router:cache:warm-up'
-
         router-cache-warmup-backoffice:
             command: 'vendor/bin/console router:cache:warm-up:backoffice'
 
@@ -231,17 +228,12 @@ sections:
 
     demodata:
         import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+            command: 'vendor/bin/console data:import --config=data/import/local/full_GLOBAL.yml'
             stores:
                 - GLOBAL
 
         import-us-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_US.yml'
-            stores:
-                - GLOBAL
-
-        update-product-labels:
-            command: 'vendor/bin/console product-label:relations:update'
             stores:
                 - GLOBAL
 

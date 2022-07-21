@@ -16,9 +16,6 @@ sections:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
     cache:
-        router-cache-warmup-yves:
-            command: 'vendor/bin/yves router:cache:warm-up'
-
         router-cache-warmup-backoffice:
             command: 'vendor/bin/console router:cache:warm-up:backoffice'
 
@@ -109,10 +106,7 @@ sections:
 
     demodata:
         import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
-
-        update-product-labels:
-            command: 'vendor/bin/console product-label:relations:update'
+            command: 'vendor/bin/console data:import --config=data/import/local/full_GLOBAL.yml'
 
     fixtures:
         fixtures:

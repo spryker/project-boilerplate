@@ -5,7 +5,7 @@ tag: 'dev'
 
 environment: docker.dev
 image:
-    tag: spryker/php:7.3
+    tag: spryker/php:7.4
     php:
         enabled-extensions:
             - blackfire
@@ -73,6 +73,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
+        version: '3.9'
         api:
             username: 'spryker'
             password: 'secret'
@@ -95,6 +96,8 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
+        version: '2.324'
+        csrf-protection-enabled: true
         endpoints:
             scheduler.spryker.local:
     mail_catcher:

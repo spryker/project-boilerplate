@@ -21,24 +21,20 @@ sudo cp -f config/Shared/ci/travis/.htaccess public/Backoffice/.htaccess
 sudo cp -f config/Shared/ci/travis/.htaccess public/BackendApi/.htaccess
 sudo cp -f config/Shared/ci/travis/.htaccess public/BackendGateway/.htaccess
 sudo cp -f config/Shared/ci/travis/.htaccess public/Glue/.htaccess
-sudo cp -f config/Shared/ci/travis/.htaccess public/Yves/.htaccess
 
 # apache: virtual hosts configuration
 sudo cp -f config/Shared/ci/travis/travis-ci-apache-backend-api /etc/apache2/sites-available/backend-api.conf
 sudo cp -f config/Shared/ci/travis/travis-ci-apache-backend-gateway /etc/apache2/sites-available/backend-gateway.conf
 sudo cp -f config/Shared/ci/travis/travis-ci-apache-backoffice /etc/apache2/sites-available/backoffice.conf
 sudo cp -f config/Shared/ci/travis/travis-ci-apache-glue /etc/apache2/sites-available/glue.conf
-sudo cp -f config/Shared/ci/travis/travis-ci-apache-yves /etc/apache2/sites-available/yves.conf
 sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/backend-api.conf
 sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/backend-gateway.conf
 sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/backoffice.conf
 sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/glue.conf
-sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/yves.conf
 sudo sed -e "s?%APPLICATION_ENV%?$APPLICATION_ENV?g" --in-place /etc/apache2/sites-available/backend-api.conf
 sudo sed -e "s?%APPLICATION_ENV%?$APPLICATION_ENV?g" --in-place /etc/apache2/sites-available/backend-gateway.conf
 sudo sed -e "s?%APPLICATION_ENV%?$APPLICATION_ENV?g" --in-place /etc/apache2/sites-available/backoffice.conf
 sudo sed -e "s?%APPLICATION_ENV%?$APPLICATION_ENV?g" --in-place /etc/apache2/sites-available/glue.conf
-sudo sed -e "s?%APPLICATION_ENV%?$APPLICATION_ENV?g" --in-place /etc/apache2/sites-available/yves.conf
 sudo sed -e "s?%POSTGRES_PORT%?$POSTGRES_PORT?g" --in-place /etc/apache2/sites-available/backend-api.conf
 sudo sed -e "s?%POSTGRES_PORT%?$POSTGRES_PORT?g" --in-place /etc/apache2/sites-available/backend-gateway.conf
 sudo sed -e "s?%POSTGRES_PORT%?$POSTGRES_PORT?g" --in-place /etc/apache2/sites-available/backoffice.conf
@@ -46,7 +42,6 @@ sudo ln -s /etc/apache2/sites-available/backend-api.conf /etc/apache2/sites-enab
 sudo ln -s /etc/apache2/sites-available/backend-gateway.conf /etc/apache2/sites-enabled/backend-gateway.conf
 sudo ln -s /etc/apache2/sites-available/backoffice.conf /etc/apache2/sites-enabled/backoffice.conf
 sudo ln -s /etc/apache2/sites-available/glue.conf /etc/apache2/sites-enabled/glue.conf
-sudo ln -s /etc/apache2/sites-available/yves.conf /etc/apache2/sites-enabled/yves.conf
 
 # apache: fastcgi/php-fpm configuration
 sudo cp -f config/Shared/ci/travis/php7-fpm.conf /etc/apache2/conf-enabled/php7-fpm.conf
