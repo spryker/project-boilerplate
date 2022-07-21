@@ -17,6 +17,7 @@ stylelint.lint({
     syntax: "scss",
     formatter: "string",
     fix: isFixMode,
+    allowEmptyInput: true
 }).then(function(data) {
     if (data.errored) {
         const messages = JSON.parse(JSON.stringify(data.output));
